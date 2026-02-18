@@ -23,7 +23,7 @@ COMMENT="${@}"
 #Generate password
 PASSWORD=$(date +%s%N | sha256sum| shuf | head -c48)
 
-#create user with password and username
+#create user with username
 useradd -c "${COMMENT}" -m ${USER_NAME}
 
 #check to see if useradd command succedded
@@ -33,9 +33,20 @@ then
   exit 1
 fi
 
+#set password
+echo ${PASSWORD} | passwd --stdin ${USER_NAME} 
+
+#password set check
+if [[ ${?} -ne 0 ]]
+then
+  echo "Password could not be set.."
+  exit 1
+fi
+
 echo "Username: " ${USER_NAME}
 echo "Password: " ${PASSWORD}
 echo "Host: " "${HOSTNAME}"
+
 
 
  
