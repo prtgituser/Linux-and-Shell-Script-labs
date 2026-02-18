@@ -1,3 +1,5 @@
+#!/bin/bash
+
 if [[ "${UID}" -ne 0 ]]
 then 
   echo "Please run script with sudo or as root"
